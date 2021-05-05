@@ -18,7 +18,7 @@ module OUI
   ROOT = File.expand_path(File.join('..', '..'), __FILE__)
   LOCAL_DB_DEFAULT = File.join(ROOT, 'db', 'oui.sqlite3')
   LOCAL_TXT_FILE = File.join(ROOT, 'data', 'oui.txt')
-  REMOTE_TXT_URI = 'http://standards.ieee.org/develop/regauth/oui/oui.txt'
+  REMOTE_TXT_URI = 'https://standards.ieee.org/develop/regauth/oui/oui.txt'
   LOCAL_MANUAL_FILE = File.join(ROOT, 'data', 'oui-manual.json')
   FIRST_LINE_INDEX = 7
   EXPECTED_DUPLICATES = [0x0001C8, 0x080030]
@@ -26,6 +26,7 @@ module OUI
   HEX_BEGINNING_REGEX = /\A[[:space:]]*[[:xdigit:]]{2}-[[:xdigit:]]{2}-[[:xdigit:]]{2}[[:space:]]*\(hex\)/
   ERASE_LINE = "\b" * LINE_LENGTH
   BLANK_LINE = ' ' * LINE_LENGTH
+  MAX_ATTEMPTS = 5
 
   MISSING_COUNTRIES = [
     0x000052,
@@ -305,9 +306,17 @@ module OUI
   end
 
   def fetch
-    uri = oui_uri
+    attempt = 1
+    uri     = oui_uri
     $stderr.puts "Fetching #{uri}"
-    open(uri).read
+
+    begin
+      open(uri, redirect: false).read
+    rescue OpenURI::HTTPRedirect => redirect
+      uri = redirect.uri
+      retry if (attempt.next) <= MAX_ATTEMPTS
+      raise
+    end
   end
 
   def install_manual
