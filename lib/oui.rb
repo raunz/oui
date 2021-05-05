@@ -311,7 +311,7 @@ module OUI
     $stderr.puts "Fetching #{uri}"
 
     begin
-      open(uri, redirect: false).read
+      URI.open(uri, redirect: false).read
     rescue OpenURI::HTTPRedirect => redirect
       uri = redirect.uri
       retry if (attempt.next) <= MAX_ATTEMPTS
