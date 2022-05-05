@@ -308,7 +308,8 @@ module OUI
   def fetch
     attempt = 1
     uri     = oui_uri
-    $stderr.puts "Fetching #{uri}"
+
+    debug "Fetching #{uri}"
 
     begin
       URI.open(uri, redirect: false).read
