@@ -1,6 +1,6 @@
 Gem::Specification::new do |s|
   s.name = 'oui-offline'
-  s.version = '1.2.8'
+  s.version = '1.2.9'
   s.summary = 'Organizationally Unique Idenitfiers (OUI)'
   s.description = 'Organizationally Unique Idenitfiers (OUI) offline database'
   s.license = 'MIT'
@@ -26,7 +26,7 @@ Gem::Specification::new do |s|
   s.homepage = 'https://github.com/steakknife/oui'
   s.post_install_message = 'Oui!'
 
-  s.add_dependency 'sequel', '>= 4', '< 6'
+  s.add_dependency 'sequel', '~> 5'
   if RUBY_PLATFORM == 'java'
     s.platform = 'java'
     s.add_dependency 'jdbc-sqlite3', '~> 3.8'
