@@ -18,7 +18,7 @@ module OUI
   ROOT = File.expand_path(File.join('..', '..'), __FILE__)
   LOCAL_DB_DEFAULT = File.join(ROOT, 'db', 'oui.sqlite3')
   LOCAL_TXT_FILE = File.join(ROOT, 'data', 'oui.txt')
-  REMOTE_TXT_URI = 'https://standards.ieee.org/develop/regauth/oui/oui.txt'
+  REMOTE_TXT_URI = 'https://standards-oui.ieee.org/oui/oui.txt'
   LOCAL_MANUAL_FILE = File.join(ROOT, 'data', 'oui-manual.json')
   FIRST_LINE_INDEX = 7
   EXPECTED_DUPLICATES = [0x0001C8, 0x080030]
